@@ -1,22 +1,20 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.example.demo</id>
+    <id>com.xiangzheng.demo</id>
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
     <name>JinjiaTableToEntity</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="xiangzheng188@gmail.com" url="https://github.com/18896101294">xiangzheng</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
-  ]]></description>
+    <description>This is a table structure fields synchronised to the entity class , saving the tedious operation of manually building entities . Support entity class new and modified for synchronisation. Includes the following: 1. Synchronise the table structure to the current entity class , the default will be the selected entity into an underscore way to synchronise the table , if you do not want to convert the prefix @ can be added , you need to pay attention to the current class will be overwritten. 2. database table new to the class
+    </description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -25,11 +23,11 @@
 
     <actions>
         <action id="com.example.demo.MyFirstAction" class="com.example.demo.MyFirstAction" text="同步表结构到当前实体类"
-                description="把数据库的表结构同步为C#类，请注意会覆盖当前类" >
+                description="Synchronise the database table structure to a C# class, note that this will overwrite the current class." >
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
 
-        <action id="com.example.demo.MyFolderAction" class="com.example.demo.MyFolderAction" text="新建表结构到实体类" description="数据库表新建到类">
+        <action id="com.example.demo.MyFolderAction" class="com.example.demo.MyFolderAction" text="新建表结构到实体类" description="Database table new to class">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
     </actions>
