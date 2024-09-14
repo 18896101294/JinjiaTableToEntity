@@ -80,7 +80,7 @@ public class MyFolderAction extends AnAction {
                     // 创建新文件
                     VirtualFile newFile = folder.createChildData(this, fileName);
 
-                    JSONObject jsonBody = getJsonObject(project, userInput, newFile);
+                    JSONObject jsonBody = getJsonObject(userInput, newFile);
 
                     // 调用 API
                     try {
@@ -108,23 +108,23 @@ public class MyFolderAction extends AnAction {
         });
     }
 
-    private static @NotNull JSONObject getJsonObject(Project project, String userInput, VirtualFile newFile) {
+    private static @NotNull JSONObject getJsonObject(String userInput, VirtualFile newFile) {
         // 提取最后一个/后面的文本
         StringBuilder filePath = new StringBuilder();
         var parentFile = newFile;
         while (true) {
             var parentPath = parentFile.getParent().getPath();
             String itemPath = parentPath.substring(parentPath.lastIndexOf("/") + 1);
-            if (!itemPath.equals(project.getName())) {
-                if (parentFile.equals(newFile)) {
-                    filePath.insert(0, itemPath);
-                } else {
-                    filePath.insert(0, itemPath + ".");
-                }
-                parentFile = parentFile.getParent();
-            } else {
+            if (itemPath.contains("Jinjia") && itemPath.contains("Model")) {
                 break;
             }
+
+            if (parentFile.equals(newFile)) {
+                filePath.insert(0, itemPath);
+            } else {
+                filePath.insert(0, itemPath + ".");
+            }
+            parentFile = parentFile.getParent();
         }
 
         // 将选中的文本转换为下划线格式
