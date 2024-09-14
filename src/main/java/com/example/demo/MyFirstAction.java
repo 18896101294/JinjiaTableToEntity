@@ -23,7 +23,7 @@ public class MyFirstAction extends AnAction {
         CommonHelper helper = new CommonHelper();
         // 获取当前的项目
         Project project = event.getData(CommonDataKeys.PROJECT);
-        String projectName = null;
+        VirtualFile currentFile = null;
 
         if (project != null) {
             // 获取当前打开的文件
@@ -40,11 +40,7 @@ public class MyFirstAction extends AnAction {
                     return;
                 }
 
-                VirtualFile currentFile = FileEditorManager.getInstance(project).getSelectedFiles()[0];
-
-                String filePath = currentFile.getParent().getPath();
-                // 提取最后一个/后面的文本
-                projectName = filePath.substring(filePath.lastIndexOf("/") + 1);
+                currentFile = FileEditorManager.getInstance(project).getSelectedFiles()[0];
             } else {
                 Messages.showMessageDialog("没有打开任何文件。", "错误", Messages.getErrorIcon());
             }
@@ -76,7 +72,7 @@ public class MyFirstAction extends AnAction {
                 // 构建 JSON 数据
                 JSONObject jsonBody = new JSONObject();
                 jsonBody.put("Tables", selectedText);
-                jsonBody.put("ProjectName", projectName);
+                jsonBody.put("ProjectName", helper.GetNameSpace(currentFile));
                 jsonBody.put("ProjectId", 1203);
                 jsonBody.put("DbId", 2);
 

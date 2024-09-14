@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.vfs.VirtualFile;
 import org.json.JSONObject;
 
 import java.net.URI;
@@ -56,5 +57,28 @@ public class CommonHelper {
                 .replaceAll("([a-z])([A-Z]+)", "$1_$2")  // 找到小写字母后面紧跟的大写字母
                 .replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2")  // 找到连续的大写字母，后面跟着小写字母
                 .toLowerCase();  // 转换为全小写
+    }
+
+    // 获取文件的命名空间
+    public String GetNameSpace(VirtualFile newFile) {
+        // 提取最后一个/后面的文本
+        StringBuilder filePath = new StringBuilder();
+        var parentFile = newFile;
+        while (true) {
+            var parentPath = parentFile.getParent().getPath();
+            String itemPath = parentPath.substring(parentPath.lastIndexOf("/") + 1);
+            if (itemPath.contains("Jinjia") && itemPath.contains("Model")) {
+                break;
+            }
+
+            if (parentFile.equals(newFile)) {
+                filePath.insert(0, itemPath);
+            } else {
+                filePath.insert(0, itemPath + ".");
+            }
+            parentFile = parentFile.getParent();
+        }
+
+        return filePath.toString();
     }
 }

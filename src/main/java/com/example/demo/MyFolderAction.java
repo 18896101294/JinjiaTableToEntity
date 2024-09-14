@@ -109,35 +109,16 @@ public class MyFolderAction extends AnAction {
     }
 
     private static @NotNull JSONObject getJsonObject(String userInput, VirtualFile newFile) {
-        // 提取最后一个/后面的文本
-        StringBuilder filePath = new StringBuilder();
-        var parentFile = newFile;
-        while (true) {
-            var parentPath = parentFile.getParent().getPath();
-            String itemPath = parentPath.substring(parentPath.lastIndexOf("/") + 1);
-            if (itemPath.contains("Jinjia") && itemPath.contains("Model")) {
-                break;
-            }
-
-            if (parentFile.equals(newFile)) {
-                filePath.insert(0, itemPath);
-            } else {
-                filePath.insert(0, itemPath + ".");
-            }
-            parentFile = parentFile.getParent();
-        }
-
         // 将选中的文本转换为下划线格式
         if (userInput != null) {
             CommonHelper helper = new CommonHelper();
             userInput = helper.convertToSnakeCase(userInput);
         }
 
-        String projectName = filePath.toString();
         // 构建 JSON 数据
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("Tables", userInput);
-        jsonBody.put("ProjectName", projectName);
+        jsonBody.put("ProjectName", new CommonHelper().GetNameSpace(newFile));
         jsonBody.put("ProjectId", 1203);
         jsonBody.put("DbId", 2);
         return jsonBody;
