@@ -1,0 +1,2 @@
+# JinjiaTableToEntity
+数据库表同步到实体Rider插件
