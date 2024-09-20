@@ -109,18 +109,19 @@ public class MyFolderAction extends AnAction {
     }
 
     private static @NotNull JSONObject getJsonObject(String userInput, VirtualFile newFile) {
+        CommonHelper helper = new CommonHelper();
         // 将选中的文本转换为下划线格式
         if (userInput != null) {
-            CommonHelper helper = new CommonHelper();
             userInput = helper.convertToSnakeCase(userInput);
         }
 
+        var userConfigList = helper.GetSelectedKey();
         // 构建 JSON 数据
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("Tables", userInput);
         jsonBody.put("ProjectName", new CommonHelper().GetNameSpace(newFile));
-        jsonBody.put("ProjectId", 1203);
-        jsonBody.put("DbId", 2);
+        jsonBody.put("ProjectId", userConfigList.get(1));
+        jsonBody.put("DbId", userConfigList.get(0));
         return jsonBody;
     }
 }

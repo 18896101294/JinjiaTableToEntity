@@ -35,7 +35,9 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-
+        <applicationService serviceImplementation="com.example.demo.PluginSettingsState" />
+        <projectConfigurable instance="com.example.demo.PluginSettingsConfigurable"
+                             displayName="JinjiaTableToEntity Settings"/>
     </extensions>
 
 </idea-plugin>

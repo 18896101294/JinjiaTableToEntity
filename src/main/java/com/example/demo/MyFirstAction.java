@@ -69,12 +69,14 @@ public class MyFirstAction extends AnAction {
                 // 显示选中的文本
                 // Messages.showMessageDialog("你选中的文本是: " + selectedText, "选中文本", Messages.getInformationIcon());
 
+                // 获取 PluginSettingsState 的实例
+                var userConfigList = helper.GetSelectedKey();
                 // 构建 JSON 数据
                 JSONObject jsonBody = new JSONObject();
                 jsonBody.put("Tables", selectedText);
                 jsonBody.put("ProjectName", helper.GetNameSpace(currentFile));
-                jsonBody.put("ProjectId", 1203);
-                jsonBody.put("DbId", 2);
+                jsonBody.put("ProjectId", userConfigList.get(1));
+                jsonBody.put("DbId", userConfigList.get(0));
 
                 // 调用 API
                 try {
