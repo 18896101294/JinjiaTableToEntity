@@ -2,7 +2,7 @@ package com.example.demo;
 
 import com.example.demo.model.KeyValuePair;
 import com.example.demo.model.TreeModel;
-import com.intellij.openapi.ui.ComboBox;
+import com.intellij.ui.JBColor;
 import com.intellij.util.ui.JBUI;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,33 +18,48 @@ public class PluginSettingsComponent {
     private JComboBox<KeyValuePair<String, String>> databaseComboBox;
 
     public PluginSettingsComponent() {
-        panel = new JPanel(new GridBagLayout());  // 使用 GridBagLayout 来精确控制布局
+        // 创建主面板并设置背景颜色
+        panel = new JPanel(new GridBagLayout());
+        panel.setBackground(JBUI.CurrentTheme.CustomFrameDecorations.paneBackground());  // 设定面板背景颜色
+
+        // 设置带有内边距的边框，让面板有更多的视觉空间
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder("配置设置"),  // 带有标题的边框
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));  // 内边距
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.WEST; // 设置左对齐
-        gbc.insets = JBUI.insets(5); // 设置一些间距
+        gbc.anchor = GridBagConstraints.WEST;  // 左对齐
+        gbc.insets = JBUI.insets(10);  // 设置内边距，使组件间更均匀
 
-        // 第一行: 模板
-        gbc.gridx = 0;  // 第一列
-        gbc.gridy = 0;  // 第一行
-        panel.add(new JLabel("生成模板："), gbc);
+        // 设置字体样式
+        Font labelFont = new Font("Arial", Font.BOLD, 12);
 
-        gbc.gridx = 1;  // 第二列
-        templateComboBox = new ComboBox<>();
-        panel.add(templateComboBox, gbc);
+        // 第一行: 模板标签和下拉框
+        addComponent(panel, gbc, "生成模板：", labelFont, templateComboBox = new JComboBox<>(), 0);
 
-        // 第二行: 数据库名 (下拉框)
-        gbc.gridx = 0;  // 第一列
-        gbc.gridy = 1;  // 第二行
-        panel.add(new JLabel("数据库连接："), gbc);
+        // 第二行: 数据库连接标签和下拉框
+        addComponent(panel, gbc, "数据库连接：", labelFont, databaseComboBox = new JComboBox<>(), 1);
 
-        gbc.gridx = 1;  // 第二列
-        databaseComboBox = new ComboBox<>();
-        panel.add(databaseComboBox, gbc);
+        // 设置组件的背景颜色（可选），提升视觉层次感
+        templateComboBox.setBackground(JBColor.WHITE);
+        databaseComboBox.setBackground(JBColor.WHITE);
 
         // 加载并填充数据库连接下拉
         loadAndFillDatabaseComboBox(null);
         loadAndFillTemplateComboBox(null);
+    }
+
+    // 添加标签和下拉框的方法
+    private void addComponent(JPanel panel, GridBagConstraints gbc, String labelText, Font font, JComponent component, int gridY) {
+        gbc.gridx = 0;  // 第一列
+        gbc.gridy = gridY;
+        JLabel label = new JLabel(labelText);
+        label.setFont(font);  // 应用字体
+        panel.add(label, gbc);
+
+        gbc.gridx = 1;  // 第二列
+        panel.add(component, gbc);
     }
 
     public JPanel getPanel() {
@@ -109,7 +124,7 @@ public class PluginSettingsComponent {
 
         SwingUtilities.invokeLater(() -> {
             templateComboBox.removeAllItems(); // 清空旧的数据
-            templateComboBox.addItem(new KeyValuePair<>("0", "请选择（默认为简单实体）")); // 添加新的数据
+            templateComboBox.addItem(new KeyValuePair<>("0", "请选择（默认为EasyEntity）")); // 添加新的数据
             templateComboBox.setSelectedIndex(0);
             for (KeyValuePair<String, String> model : pairArrayList) {
                 templateComboBox.addItem(model); // 添加新的数据
