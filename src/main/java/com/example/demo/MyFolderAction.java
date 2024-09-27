@@ -27,6 +27,11 @@ public class MyFolderAction extends AnAction {
         // 获取用户右键点击的文件夹或项目
         VirtualFile folder = event.getData(CommonDataKeys.VIRTUAL_FILE);
 
+        // 检查是否为文件夹
+        if (folder != null && !folder.isDirectory()) {
+            folder = folder.getParent();
+        }
+
         // 判断是否为文件夹或项目根目录
         if (project != null) {
             // 弹出输入框让用户输入文件名
@@ -37,8 +42,12 @@ public class MyFolderAction extends AnAction {
                     Messages.getQuestionIcon()
             );
 
+            if (userInput == null) {
+                return;
+            }
+
             // 检查用户是否输入了内容
-            if (userInput != null && !userInput.trim().isEmpty()) {
+            if (!userInput.trim().isEmpty()) {
 
                 // 在指定的文件夹中创建文件
                 createNewFile(project, folder, userInput);
