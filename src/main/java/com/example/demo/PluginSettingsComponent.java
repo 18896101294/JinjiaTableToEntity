@@ -33,7 +33,7 @@ public class PluginSettingsComponent {
         gbc.insets = JBUI.insets(10);  // 设置内边距，使组件间更均匀
 
         // 设置字体样式
-        Font labelFont = new Font("Arial", Font.BOLD, 12);
+        Font labelFont = new Font("Microsoft YaHei", Font.BOLD, 12);
 
         // 第一行: 模板标签和下拉框
         addComponent(panel, gbc, "生成模板：", labelFont, templateComboBox = new JComboBox<>(), 0);
